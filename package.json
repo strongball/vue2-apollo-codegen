@@ -1,8 +1,12 @@
 {
   "name": "vue-apollo-code",
   "version": "1.9.1",
-  "description": "",
-  "repository": "",
+  "author": "strongball",
+  "description": "graphql-codegen for vue2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/strongball/vue2-apollo-codegen"
+  },
   "scripts": {
     "prepack": "bob-update-version",
     "build": "bob"

@@ -13,7 +13,7 @@ class VueApolloVisitor extends ClientSideBaseVisitor {
         return [...baseImports, dollarApollo, apolloResult, fetchResult];
     }
     _buildMutation(node, documentVariableName, operationType, operationResultType, operationVariablesTypes) {
-        const fn = `export const ${node.name.value}MutateFn = async (apollo: DollarApollo<any>, variables: ${operationVariablesTypes}): Promise<FetchResult<${operationResultType}>> => {
+        const fn = `export const ${node.name.value}MutateFn = async (apollo: DollarApollo<any>, variables?: ${operationVariablesTypes}): Promise<FetchResult<${operationResultType}>> => {
       const res = await apollo.mutate<${operationResultType}, ${operationVariablesTypes}>({
         mutation: ${documentVariableName},
         variables
@@ -23,7 +23,7 @@ class VueApolloVisitor extends ClientSideBaseVisitor {
         return fn;
     }
     _buildQuery(node, documentVariableName, operationType, operationResultType, operationVariablesTypes) {
-        const fn = `export const ${node.name.value}QueryFn = async (apollo: DollarApollo<any>, variables: ${operationVariablesTypes}): Promise<ApolloQueryResult<${operationResultType}>> => {
+        const fn = `export const ${node.name.value}QueryFn = async (apollo: DollarApollo<any>, variables?: ${operationVariablesTypes}): Promise<ApolloQueryResult<${operationResultType}>> => {
        const res = await apollo.query<${operationResultType}, ${operationVariablesTypes}>({
         query: ${documentVariableName},
         variables
@@ -33,10 +33,10 @@ class VueApolloVisitor extends ClientSideBaseVisitor {
         return fn;
     }
     buildOperation(node, documentVariableName, operationType, operationResultType, operationVariablesTypes) {
-        if (operationType === "Query") {
+        if (operationType === 'Query') {
             return this._buildQuery(node, documentVariableName, operationType, operationResultType, operationVariablesTypes);
         }
-        else if (operationType === "Mutation") {
+        else if (operationType === 'Mutation') {
             return this._buildMutation(node, documentVariableName, operationType, operationResultType, operationVariablesTypes);
         }
         return '';
